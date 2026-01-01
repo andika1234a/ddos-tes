@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ XVISION DDoS Toolkit v5.0</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-bolt"></i>
+                <h1>XVISION<span class="highlight">DDoS</span> v5.0</h1>
+            </div>
+            <div class="tagline">30 Attack Methods • 5 Brutal Combos • No CORS Limits</div>
+        </header>
+
+        <!-- Control Panel -->
+        <div class="control-panel">
+            <div class="panel-header">
+                <h2><i class="fas fa-crosshairs"></i> TARGET CONFIGURATION</h2>
+            </div>
+            <div class="input-group">
+                <div class="input-box">
+                    <label><i class="fas fa-globe"></i> TARGET URL</label>
+                    <input type="text" id="targetUrl" placeholder="https://example.com" value="">
+                </div>
+                <div class="input-box">
+                    <label><i class="fas fa-network-wired"></i> CONCURRENT WORKERS</label>
+                    <input type="range" id="workersRange" min="10" max="5000" value="1000">
+                    <div class="range-value" id="workersValue">1000</div>
+                </div>
+                <div class="input-box">
+                    <label><i class="fas fa-stopwatch"></i> DURATION (seconds)</label>
+                    <input type="range" id="durationRange" min="10" max="3600" value="300">
+                    <div class="range-value" id="durationValue">300s</div>
+                </div>
+            </div>
+            <div class="button-group">
+                <button id="testBtn" class="btn test-btn"><i class="fas fa-vial"></i> TEST CONNECTION</button>
+                <button id="startBtn" class="btn start-btn"><i class="fas fa-play"></i> START ATTACK</button>
+                <button id="stopBtn" class="btn stop-btn"><i class="fas fa-stop"></i> STOP ATTACK</button>
+                <button id="autoBtn" class="btn auto-btn"><i class="fas fa-robot"></i> AUTO MODE</button>
+            </div>
+        </div>
+
+        <!-- Stats Dashboard -->
+        <div class="stats-dashboard">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+                <div class="stat-info">
+                    <div class="stat-label">REQUESTS</div>
+                    <div class="stat-value" id="reqCount">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-tachometer-alt"></i></div>
+                <div class="stat-info">
+                    <div class="stat-label">RPS</div>
+                    <div class="stat-value" id="rpsCount">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-info">
+                    <div class="stat-label">TIME</div>
+                    <div class="stat-value" id="timeCount">0s</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-microchip"></i></div>
+                <div class="stat-info">
+                    <div class="stat-label">ACTIVE WORKERS</div>
+                    <div class="stat-value" id="workerCount">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="stat-info">
+                    <div class="stat-label">ERRORS</div>
+                    <div class="stat-value" id="errorCount">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Methods Selection -->
+        <div class="methods-section">
+            <div class="section-header">
+                <h2><i class="fas fa-code-branch"></i> ATTACK METHODS (30 Total)</h2>
+                <div class="section-tabs">
+                    <button class="tab-btn active" data-tab="slow">SLOW ATTACKS (10)</button>
+                    <button class="tab-btn" data-tab="flood">FLOOD ATTACKS (10)</button>
+                    <button class="tab-btn" data-tab="brutal">BRUTAL ATTACKS (10)</button>
+                    <button class="tab-btn" data-tab="combo">COMBINATION ATTACKS (5)</button>
+                </div>
+            </div>
+
+            <!-- Slow Attacks Tab -->
+            <div class="methods-grid tab-content active" id="slowTab">
+                <div class="method-card" data-method="slowloris">
+                    <div class="method-icon"><i class="fas fa-snail"></i></div>
+                    <h3>SLOWLORIS</h3>
+                    <p>Partial HTTP requests, keep connections open</p>
+                    <div class="method-tags">
+                        <span class="tag resource">RESOURCE</span>
+                        <span class="tag stealth">STEALTH</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="rudd">
+                    <div class="method-icon"><i class="fas fa-turtle"></i></div>
+                    <h3>R.U.D.D</h3>
+                    <p>Random Upload Data Drip - Slow data upload</p>
+                    <div class="method-tags">
+                        <span class="tag slow">SLOW</span>
+                        <span class="tag memory">MEMORY</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="slowread">
+                    <div class="method-icon"><i class="fas fa-book-reader"></i></div>
+                    <h3>SLOW READ</h3>
+                    <p>Read responses slowly, consume connections</p>
+                    <div class="method-tags">
+                        <span class="tag connection">CONNECTION</span>
+                        <span class="tag stealth">STEALTH</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="slowpost">
+                    <div class="method-icon"><i class="fas fa-paper-plane"></i></div>
+                    <h3>SLOW POST</h3>
+                    <p>Send POST data very slowly</p>
+                    <div class="method-tags">
+                        <span class="tag resource">RESOURCE</span>
+                        <span class="tag app">APP</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="apachekill">
+                    <div class="method-icon"><i class="fas fa-skull-crossbones"></i></div>
+                    <h3>APACHE KILLER</h3>
+                    <p>Apache Range Header exploit</p>
+                    <div class="method-tags">
+                        <span class="tag exploit">EXPLOIT</span>
+                        <span class="tag memory">MEMORY</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="hashcollision">
+                    <div class="method-icon"><i class="fas fa-hashtag"></i></div>
+                    <h3>HASH COLLISION</h3>
+                    <p>Hash table collision attack</p>
+                    <div class="method-tags">
+                        <span class="tag cpu">CPU</span>
+                        <span class="tag exploit">EXPLOIT</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="keepalive">
+                    <div class="method-icon"><i class="fas fa-link"></i></div>
+                    <h3>KEEP-ALIVE</h3>
+                    <p>Maximize HTTP keep-alive connections</p>
+                    <div class="method-tags">
+                        <span class="tag connection">CONNECTION</span>
+                        <span class="tag memory">MEMORY</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="websocketslow">
+                    <div class="method-icon"><i class="fas fa-plug"></i></div>
+                    <h3>WEBSOCKET SLOW</h3>
+                    <p>Slow WebSocket data transmission</p>
+                    <div class="method-tags">
+                        <span class="tag realtime">REALTIME</span>
+                        <span class="tag connection">CONNECTION</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="pipelineslow">
+                    <div class="method-icon"><i class="fas fa-stream"></i></div>
+                    <h3>PIPELINE SLOW</h3>
+                    <p>HTTP pipeline slow request attack</p>
+                    <div class="method-tags">
+                        <span class="tag protocol">PROTOCOL</span>
+                        <span class="tag memory">MEMORY</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="cpuslow">
+                    <div class="method-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>CPU SLOW</h3>
+                    <p>Complex calculations to overload CPU</p>
+                    <div class="method-tags">
+                        <span class="tag cpu">CPU</span>
+                        <span class="tag compute">COMPUTE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flood Attacks Tab -->
+            <div class="methods-grid tab-content" id="floodTab">
+                <div class="method-card" data-method="httpflood">
+                    <div class="method-icon"><i class="fas fa-wave-square"></i></div>
+                    <h3>HTTP FLOOD</h3>
+                    <p>Standard HTTP request flood</p>
+                    <div class="method-tags">
+                        <span class="tag bandwidth">BANDWIDTH</span>
+                        <span class="tag basic">BASIC</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="httpsflood">
+                    <div class="method-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>HTTPS FLOOD</h3>
+                    <p>SSL/TLS encrypted request flood</p>
+                    <div class="method-tags">
+                        <span class="tag ssl">SSL</span>
+                        <span class="tag encryption">ENCRYPTION</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="postflood">
+                    <div class="method-icon"><i class="fas fa-database"></i></div>
+                    <h3>POST FLOOD</h3>
+                    <p>Large POST data flood</p>
+                    <div class="method-tags">
+                        <span class="tag data">DATA</span>
+                        <span class="tag app">APP</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="getflood">
+                    <div class="method-icon"><i class="fas fa-search"></i></div>
+                    <h3>GET FLOOD</h3>
+                    <p>GET request flood with random parameters</p>
+                    <div class="method-tags">
+                        <span class="tag cache">CACHE</span>
+                        <span class="tag basic">BASIC</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="xmlflood">
+                    <div class="method-icon"><i class="fas fa-code"></i></div>
+                    <h3>XML FLOOD</h3>
+                    <p>XML data flood attack</p>
+                    <div class="method-tags">
+                        <span class="tag xml">XML</span>
+                        <span class="tag parser">PARSER</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="jsonflood">
+                    <div class="method-icon"><i class="fas fa-brackets-curly"></i></div>
+                    <h3>JSON FLOOD</h3>
+                    <p>Large JSON payload flood</p>
+                    <div class="method-tags">
+                        <span class="tag json">JSON</span>
+                        <span class="tag api">API</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="websocketflood">
+                    <div class="method-icon"><i class="fas fa-bolt"></i></div>
+                    <h3>WEBSOCKET FLOOD</h3>
+                    <p>WebSocket connection flood</p>
+                    <div class="method-tags">
+                        <span class="tag realtime">REALTIME</span>
+                        <span class="tag connection">CONNECTION</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="udpflood">
+                    <div class="method-icon"><i class="fas fa-wifi"></i></div>
+                    <h3>UDP FLOOD</h3>
+                    <p>UDP packet flood (via WebRTC)</p>
+                    <div class="method-tags">
+                        <span class="tag udp">UDP</span>
+                        <span class="tag protocol">PROTOCOL</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="icmpflood">
+                    <div class="method-icon"><i class="fas fa-satellite-dish"></i></div>
+                    <h3>ICMP FLOOD</h3>
+                    <p>Ping flood attack simulation</p>
+                    <div class="method-tags">
+                        <span class="tag icmp">ICMP</span>
+                        <span class="tag network">NETWORK</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="randomflood">
+                    <div class="method-icon"><i class="fas fa-random"></i></div>
+                    <h3>RANDOM FLOOD</h3>
+                    <p>Randomized request flood</p>
+                    <div class="method-tags">
+                        <span class="tag random">RANDOM</span>
+                        <span class="tag adaptive">ADAPTIVE</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brutal Attacks Tab -->
+            <div class="methods-grid tab-content" id="brutalTab">
+                <div class="method-card" data-method="mixedflood">
+                    <div class="method-icon"><i class="fas fa-bomb"></i></div>
+                    <h3>MIXED FLOOD</h3>
+                    <p>Combination of all flood methods</p>
+                    <div class="method-tags">
+                        <span class="tag mixed">MIXED</span>
+                        <span class="tag heavy">HEAVY</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="apibomb">
+                    <div class="method-icon"><i class="fas fa-rocket"></i></div>
+                    <h3>API BOMB</h3>
+                    <p>Target API endpoints specifically</p>
+                    <div class="method-tags">
+                        <span class="tag api">API</span>
+                        <span class="tag precise">PRECISE</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="resourceexhaust">
+                    <div class="method-icon"><i class="fas fa-battery-empty"></i></div>
+                    <h3>RESOURCE EXHAUST</h3>
+                    <p>Exhaust all server resources</p>
+                    <div class="method-tags">
+                        <span class="tag resource">RESOURCE</span>
+                        <span class="tag memory">MEMORY</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="sslexhaust">
+                    <div class="method-icon"><i class="fas fa-lock"></i></div>
+                    <h3>SSL EXHAUST</h3>
+                    <p>SSL handshake exhaustion</p>
+                    <div class="method-tags">
+                        <span class="tag ssl">SSL</span>
+                        <span class="tag cpu">CPU</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="connectiontable">
+                    <div class="method-icon"><i class="fas fa-table"></i></div>
+                    <h3>CONNECTION TABLE</h3>
+                    <p>Fill connection tables completely</p>
+                    <div class="method-tags">
+                        <span class="tag connection">CONNECTION</span>
+                        <span class="tag kernel">KERNEL</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="bandwidthsaturate">
+                    <div class="method-icon"><i class="fas fa-tachometer-alt-fast"></i></div>
+                    <h3>BANDWIDTH SATURATE</h3>
+                    <p>Maximum bandwidth consumption</p>
+                    <div class="method-tags">
+                        <span class="tag bandwidth">BANDWIDTH</span>
+                        <span class="tag network">NETWORK</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="cachepoison">
+                    <div class="method-icon"><i class="fas fa-vial-virus"></i></div>
+                    <h3>CACHE POISON</h3>
+                    <p>Poison cache with random data</p>
+                    <div class="method-tags">
+                        <span class="tag cache">CACHE</span>
+                        <span class="tag storage">STORAGE</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="databaseoverload">
+                    <div class="method-icon"><i class="fas fa-server"></i></div>
+                    <h3>DATABASE OVERLOAD</h3>
+                    <p>Overload database with queries</p>
+                    <div class="method-tags">
+                        <span class="tag database">DATABASE</span>
+                        <span class="tag iops">IOPS</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="iptableoverflow">
+                    <div class="method-icon"><i class="fas fa-project-diagram"></i></div>
+                    <h3>IP TABLE OVERFLOW</h3>
+                    <p>Overflow IP connection tables</p>
+                    <div class="method-tags">
+                        <span class="tag iptables">IPTABLES</span>
+                        <span class="tag firewall">FIREWALL</span>
+                    </div>
+                </div>
+                <div class="method-card" data-method="multivector">
+                    <div class="method-icon"><i class="fas fa-asterisk"></i></div>
+                    <h3>MULTI-VECTOR</h3>
+                    <p>Multiple vector simultaneous attack</p>
+                    <div class="method-tags">
+                        <span class="tag mixed">MIXED</span>
+                        <span class="tag brutal">BRUTAL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Combination Attacks Tab -->
+            <div class="methods-grid tab-content" id="comboTab">
+                <div class="method-card combo-card" data-method="multislow">
+                    <div class="method-icon"><i class="fas fa-snowflake"></i></div>
+                    <h3>MULTI SLOW</h3>
+                    <p>5 slow methods combined</p>
+                    <div class="method-tags">
+                        <span class="tag combo">COMBO</span>
+                        <span class="tag slow">SLOW</span>
+                        <span class="tag resource">RESOURCE</span>
+                    </div>
+                    <div class="combo-details">
+                        <span class="combo-item">SLOWLORIS</span>
+                        <span class="combo-item">R.U.D.D</span>
+                        <span class="combo-item">SLOW READ</span>
+                        <span class="combo-item">SLOW POST</span>
+                        <span class="combo-item">APACHE KILLER</span>
+                    </div>
+                </div>
+                <div class="method-card combo-card" data-method="multiflood">
+                    <div class="method-icon"><i class="fas fa-water"></i></div>
+                    <h3>MULTI FLOOD</h3>
+                    <p>All flood methods combined</p>
+                    <div class="method-tags">
+                        <span class="tag combo">COMBO</span>
+                        <span class="tag flood">FLOOD</span>
+                        <span class="tag bandwidth">BANDWIDTH</span>
+                    </div>
+                    <div class="combo-details">
+                        <span class="combo-item">HTTP FLOOD</span>
+                        <span class="combo-item">HTTPS FLOOD</span>
+                        <span class="combo-item">POST FLOOD</span>
+                        <span class="combo-item">UDP FLOOD</span>
+                        <span class="combo-item">WEBSOCKET FLOOD</span>
+                    </div>
+                </div>
+                <div class="method-card combo-card" data-method="multistorm">
+                    <div class="method-icon"><i class="fas fa-cloud-bolt"></i></div>
+                    <h3>MULTI STORM</h3>
+                    <p>Random mix of all methods</p>
+                    <div class="method-tags">
+                        <span class="tag combo">COMBO</span>
+                        <span class="tag random">RANDOM</span>
+                        <span class="tag adaptive">ADAPTIVE</span>
+                    </div>
+                    <div class="combo-details">
+                        <span class="combo-item">RANDOM METHODS</span>
+                        <span class="combo-item">AUTO-ADAPTING</span>
+                        <span class="combo-item">INTELLIGENT SWITCH</span>
+                    </div>
+                </div>
+                <div class="method-card combo-card" data-method="multivectorcombo">
+                    <div class="method-icon"><i class="fas fa-layer-group"></i></div>
+                    <h3>MULTI VECTOR</h3>
+                    <p>10 brutal methods at once</p>
+                    <div class="method-tags">
+                        <span class="tag combo">COMBO</span>
+                        <span class="tag brutal">BRUTAL</span>
+                        <span class="tag extreme">EXTREME</span>
+                    </div>
+                    <div class="combo-details">
+                        <span class="combo-item">10 METHODS</span>
+                        <span class="combo-item">MAXIMUM IMPACT</span>
+                        <span class="combo-item">RESOURCE DRAIN</span>
+                    </div>
+                </div>
+                <div class="method-card combo-card" data-method="ultimatedestroyer">
+                    <div class="method-icon"><i class="fas fa-fire"></i></div>
+                    <h3>ULTIMATE DESTROYER</h3>
+                    <p>ALL 30 METHODS COMBINED</p>
+                    <div class="method-tags">
+                        <span class="tag combo">COMBO</span>
+                        <span class="tag ultimate">ULTIMATE</span>
+                        <span class="tag destructive">DESTRUCTIVE</span>
+                    </div>
+                    <div class="combo-details">
+                        <span class="combo-item">30 METHODS</span>
+                        <span class="combo-item">FULL POWER</span>
+                        <span class="combo-item">MAXIMUM DESTRUCTION</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="selected-method">
+                <div class="selected-header">
+                    <h3><i class="fas fa-check-circle"></i> SELECTED METHOD</h3>
+                    <span class="method-name" id="selectedMethodName">None Selected</span>
+                </div>
+                <div class="selected-details" id="selectedMethodDetails">
+                    Select an attack method from above
+                </div>
+            </div>
+        </div>
+
+        <!-- Log Console -->
+        <div class="console-section">
+            <div class="console-header">
+                <h2><i class="fas fa-terminal"></i> ATTACK LOGS</h2>
+                <button id="clearLogsBtn" class="btn small-btn"><i class="fas fa-trash"></i> CLEAR LOGS</button>
+            </div>
+            <div class="console-output" id="consoleOutput">
+                <div class="log-entry info">
+                    <span class="log-time">[00:00:00]</span>
+                    <span class="log-message">XVISION DDoS Toolkit v5.0 Initialized</span>
+                </div>
+                <div class="log-entry info">
+                    <span class="log-time">[00:00:00]</span>
+                    <span class="log-message">30 attack methods loaded</span>
+                </div>
+                <div class="log-entry info">
+                    <span class="log-time">[00:00:00]</span>
+                    <span class="log-message">Ready for target configuration</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-info">
+                <div class="footer-item">
+                    <i class="fas fa-code"></i>
+                    <span>XVISION DDoS Toolkit v5.0</span>
+                </div>
+                <div class="footer-item">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>30 Methods • 5 Combos • No CORS</span>
+                </div>
+                <div class="footer-item">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>For Educational & Testing Purposes Only</span>
+                </div>
+            </div>
+            <div class="footer-status">
+                <div class="status-indicator" id="statusIndicator">
+                    <div class="status-dot offline"></div>
+                    <span>OFFLINE</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
